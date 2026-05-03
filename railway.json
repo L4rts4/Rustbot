@@ -1,11 +1,17 @@
-{
-  "$schema": "https://railway.app/railway.schema.json",
-  "build": {
-    "builder": "NIXPACKS"
-  },
-  "deploy": {
-    "startCommand": "node src/index.js",
-    "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+module.exports = {
+  data: new SlashCommandBuilder().setName('serveri').setDescription('Näyttää Rust-serverin tiedot'),
+  async execute(interaction) {
+    const embed = new EmbedBuilder()
+      .setColor(0xCE3720)
+      .setTitle('🗺️ Rust Serveri')
+      .setDescription('⚠️ Rust+ yhteyttä ei ole vielä määritetty.')
+      .addFields(
+        { name: '📡 Status', value: 'Ei yhteyttä', inline: true },
+        { name: '👥 Pelaajat', value: '-', inline: true },
+        { name: '⏰ Aika', value: '-', inline: true },
+      )
+      .setTimestamp();
+    await interaction.reply({ embeds: [embed] });
   }
-}
+};
