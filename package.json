@@ -1,0 +1,29 @@
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName('switch')
+    .setDescription('Ohjaa Smart Switch -laitetta')
+    .addStringOption(opt =>
+      opt.setName('nimi')
+        .setDescription('Switchin nimi')
+        .setRequired(true))
+    .addStringOption(opt =>
+      opt.setName('tila')
+        .setDescription('Päällä vai pois')
+        .setRequired(true)
+        .addChoices(
+          { name: '✅ Päälle', value: 'on' },
+          { name: '❌ Pois', value: 'off' },
+        )),
+  async execute(interaction) {
+    const nimi = interaction.options.getString('nimi');
+    const tila = interaction.options.getString('tila');
+    const embed = new EmbedBuilder()
+      .setColor(tila === 'on' ? 0x00FF00 : 0xFF0000)
+      .setTitle('🔌 Smart Switch')
+      .setDescription(`⚠️ Rust+ yhteyttä ei ole vielä määritetty.\n**Switch:** ${nimi}\n**Tila:** ${tila === 'on' ? '✅ Päälle' : '❌ Pois'}`)
+      .setTimestamp();
+    await interaction.reply({ embeds: [embed] });
+  }
+};
